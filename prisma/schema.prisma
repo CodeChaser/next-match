@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())  
+  id                String  @id @default(cuid())
   userId            String
   type              String
   provider          String
@@ -20,49 +20,62 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-   // createdAt DateTime @default(now())
+
+  // createdAt DateTime @default(now())
   // updatedAt DateTime @updatedAt
   @@unique([provider, providerAccountId])
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String          @unique
+  email         String    @unique
   emailVerified DateTime?
   passwordHash  String
   image         String?
   accounts      Account[]
- 
+
   // createdAt DateTime @default(now())
   // updatedAt DateTime @updatedAt
 
-  Member        Member?
+  Member Member?
 }
- 
+
 model Member {
-   id          String   @id @default(cuid())
-   userId      String   @unique
-   name        String
-   gender      String
-   dateOfBirth DateTime
-   created     DateTime @default(now())
-   updated     DateTime @default(now())
-   description String
-   city        String
-   country     String
-   image       String?
-   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-   photos      Photo[]
- }
- 
- model Photo {
-   id       String  @id @default(cuid())
-   url      String
-   publicId String?
- 
-   memberId String
-   member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
- }
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  name        String
+  gender      String
+  dateOfBirth DateTime
+  created     DateTime @default(now())
+  updated     DateTime @default(now())
+  description String
+  city        String
+  country     String
+  image       String?
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  photos      Photo[]
+  sourceLikes Like[]   @relation("source")
+  targetLikes Like[]   @relation("target")
+}
+
+model Photo {
+  id       String  @id @default(cuid())
+  url      String
+  publicId String?
+
+  memberId String
+  member   Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+model Like {
+  sourceUserId String
+  sourceMember Member @relation("source", fields: [sourceUserId], references: [userId], onDelete: Cascade)
+
+  targetUserId String
+  targetMember Member @relation("target", fields: [targetUserId], references: [userId], onDelete: Cascade)
+
+  @@id([sourceUserId, targetUserId])
+}

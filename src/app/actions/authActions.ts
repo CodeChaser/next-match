@@ -9,7 +9,7 @@ import {
 import { ActionResult } from '@/types';
 import { AuthError, User } from 'next-auth';
 import { LoginSchema } from '@/lib/validateschemas/loginSchema';
-import { signIn, signOut } from '@/auth';
+import { auth, signIn, signOut } from '@/auth';
 
 export async function signInUser(
   data: LoginSchema
@@ -79,4 +79,13 @@ export async function getUserByEmail(email: string) {
 
 export async function getUserById(id: string) {
   return prisma.user.findUnique({ where: { id } });
+}
+
+export async function getAuthUserId() {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!userId) throw new Error('Unauthorized');
+
+  return userId;
 }
