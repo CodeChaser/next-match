@@ -2,18 +2,13 @@
 
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcryptjs';
-import {
-  registerSchema,
-  RegisterSchema,
-} from '@/lib/validateschemas/registerSchema';
-import { ActionResult } from '@/types';
+import { registerSchema, RegisterSchema } from '@/lib/schemas/registerSchema';
+import { ActionResult } from '@/lib/types';
 import { AuthError, User } from 'next-auth';
-import { LoginSchema } from '@/lib/validateschemas/loginSchema';
+import { LoginSchema } from '@/lib/schemas/loginSchema';
 import { auth, signIn, signOut } from '@/auth';
 
-export async function signInUser(
-  data: LoginSchema
-): Promise<ActionResult<string>> {
+export async function signInUser(data: LoginSchema): Promise<ActionResult<string>> {
   try {
     const result = await signIn('credentials', {
       email: data.email,
@@ -42,9 +37,7 @@ export async function signOutUser() {
   await signOut({ redirectTo: '/' });
 }
 
-export async function registerUser(
-  data: RegisterSchema
-): Promise<ActionResult<User>> {
+export async function registerUser(data: RegisterSchema): Promise<ActionResult<User>> {
   const validated = registerSchema.safeParse(data);
   try {
     if (!validated.success) {

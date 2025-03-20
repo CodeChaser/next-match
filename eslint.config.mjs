@@ -10,7 +10,18 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:import/recommended",
+    "plugin:import/typescript"
+  ),
+  {
+    // Custom rule override block
+    rules: {
+      'import/no-unresolved': 'off', // silence import alias false errors
+    },
+  },
 ];
 
 export default eslintConfig;

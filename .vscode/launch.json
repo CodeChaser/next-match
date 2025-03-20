@@ -1,0 +1,37 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug Frontend (Chrome)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "userDataDir": "C:\\Users\\codec\\AppData\\Local\\Google\\Chrome\\User Data\\Default",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    },
+    {
+      "name": "Debug Server-Side Actions (Node.js)",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "outFiles": ["${workspaceFolder}/.next/**/*.js"]
+    },
+    {
+      "type": "pwa-node",
+      "request": "attach",
+      "name": "Attach to Running Next.js Dev Server",
+      "port": 9229,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Full Stack Debugging (Chrome + Node)",
+      "configurations": ["Debug Frontend (Chrome)", "Debug Server-Side Actions (Node.js)"]
+    }
+  ]
+}

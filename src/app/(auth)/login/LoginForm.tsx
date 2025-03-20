@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
 import { GiPadlock } from 'react-icons/gi';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { LoginSchema, loginSchema } from '@/lib/validateschemas/loginSchema';
+import { LoginSchema, loginSchema } from '@/lib/schemas/loginSchema';
 import { signInUser } from '@/app/actions/authActions';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';

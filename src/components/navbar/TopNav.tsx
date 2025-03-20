@@ -1,31 +1,22 @@
 import { GiMatchTip } from 'react-icons/gi';
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarContent,
-  NavbarMenuToggle,
-  NavbarMenu,
-} from '@heroui/navbar';
+import { Navbar, NavbarBrand, NavbarContent, NavbarMenuToggle, NavbarMenu } from '@heroui/navbar';
 import Link from 'next/link';
 import NavLink from './NavLink';
 import { Button } from '@heroui/button';
 import UserMenu from './UserMenu';
 import { auth } from '@/auth';
+import { getUserInfoForNav } from '@/app/actions/userActions';
 
 export default async function TopNav() {
   const session = await auth();
+  const userInfo = session?.user && (await getUserInfoForNav());
 
   return (
     <Navbar
       maxWidth={'xl'}
       className='bg-gradient-to-r from-purple-400 to-purple-700'
       classNames={{
-        item: [
-          'text-base sm:text-lg',
-          'text-white',
-          'uppercase',
-          'data-[active=true]:text-yellow-200',
-        ],
+        item: ['text-base sm:text-lg', 'text-white', 'uppercase', 'data-[active=true]:text-yellow-200'],
       }}
       isBordered>
       <NavbarBrand as={Link} href='/'>
@@ -45,22 +36,14 @@ export default async function TopNav() {
       </NavbarContent>
 
       <NavbarContent justify='end' className='hidden sm:flex gap-2'>
-        {session?.user ? (
-          <UserMenu user={session.user} />
+        {userInfo ? (
+          <UserMenu user={userInfo} />
         ) : (
           <>
-            <Button
-              as={Link}
-              href={'/login'}
-              variant={'bordered'}
-              className={'text-white'}>
+            <Button as={Link} href={'/login'} variant={'bordered'} className={'text-white'}>
               Login
             </Button>
-            <Button
-              as={Link}
-              href={'/register'}
-              variant={'bordered'}
-              className={'text-white'}>
+            <Button as={Link} href={'/register'} variant={'bordered'} className={'text-white'}>
               Register
             </Button>
           </>
@@ -74,18 +57,10 @@ export default async function TopNav() {
 
         {!session?.user && (
           <>
-            <Button
-              as={Link}
-              href='/login'
-              variant='bordered'
-              className='text-white w-full'>
+            <Button as={Link} href='/login' variant='bordered' className='text-white w-full'>
               Login
             </Button>
-            <Button
-              as={Link}
-              href='/register'
-              variant='bordered'
-              className='text-white w-full'>
+            <Button as={Link} href='/register' variant='bordered' className='text-white w-full'>
               Register
             </Button>
           </>
