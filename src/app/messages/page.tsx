@@ -1,10 +1,25 @@
-import Link from 'next/link';
+import MessageSidebar from '@/app/messages/MessagesSideBar';
+import { getMessagesByContainer } from '../actions/messageActions';
+import MessageTable from './MessageTable';
 
-export default function MembersPage() {
-  return (
-    <div>
-      <h3 className='text-3xl'>Messages</h3>
-      <Link href='/'>Go back home</Link>
-    </div>
-  );
+export default async function MessagesPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ container: string }>;
+}) {
+    const { container } = await searchParams;
+    const messages = await getMessagesByContainer(
+        container,
+    );
+
+    return (
+        <div className="grid grid-cols-12 gap-5 h-[80vh] mt-10">
+            <div className="col-span-2">
+                <MessageSidebar />
+            </div>
+            <div className="col-span-10">
+                <MessageTable messages={messages} />
+            </div>
+        </div>
+    );
 }
