@@ -1,18 +1,22 @@
 'use client';
 
 import clsx from 'clsx';
-import { Avatar } from '@heroui/avatar';
-import { transformImageUrl } from '@/lib/util';
+import { timeAgo, transformImageUrl } from '@/lib/util';
 import { useEffect, useRef } from 'react';
 import { MessageDto } from '@/lib/types';
+import PresenceAvatar from '@/components/PresenceAvatar';
 
 type Props = {
     message: MessageDto;
     currentUserId: string;
 };
 
-export default function MessageBox({ message, currentUserId }: Props) {
-    const isCurrentUserSender = message.senderId === currentUserId;
+export default function MessageBox({
+    message,
+    currentUserId,
+}: Props) {
+    const isCurrentUserSender =
+        message.senderId === currentUserId;
     const messageEndRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -23,19 +27,27 @@ export default function MessageBox({ message, currentUserId }: Props) {
     }, [messageEndRef]);
 
     const renderAvatar = () => (
-        <Avatar
-            name={message.senderName}
-            className="self-end"
-            src={transformImageUrl(message.senderImage) || '/images/user.png'}
-        />
+        <div className="self-end">
+            <PresenceAvatar
+                src={
+                    transformImageUrl(
+                        message.senderImage,
+                    ) || '/images/user.png'
+                }
+                userId={message.senderId}
+            />
+        </div>
     );
 
-    const messageContentClasses = clsx('flex flex-col w-[50%] px-2 py-1', {
-        'rounded-l-xl rounded-tr-xl text-white bg-blue-100':
-            isCurrentUserSender,
-        'rounded-r-xl rounded-tl-xl border-gray-200 bg-green-100':
-            !isCurrentUserSender,
-    });
+    const messageContentClasses = clsx(
+        'flex flex-col w-[50%] px-2 py-1',
+        {
+            'rounded-l-xl rounded-tr-xl text-white bg-blue-100':
+                isCurrentUserSender,
+            'rounded-r-xl rounded-tl-xl border-gray-200 bg-green-100':
+                !isCurrentUserSender,
+        },
+    );
 
     const renderMessageHeader = () => (
         <div
@@ -43,9 +55,10 @@ export default function MessageBox({ message, currentUserId }: Props) {
                 'justify-between': isCurrentUserSender,
             })}
         >
-            {message.dateRead && message.recipientId !== currentUserId ? (
+            {message.dateRead &&
+            message.recipientId !== currentUserId ? (
                 <span className="text-xs text-black text-italic">
-                    (Read 4 mins ago)
+                    (Read {timeAgo(message.dateRead)})
                 </span>
             ) : (
                 <div />
@@ -65,7 +78,9 @@ export default function MessageBox({ message, currentUserId }: Props) {
         return (
             <div className={messageContentClasses}>
                 {renderMessageHeader()}
-                <p className="text-sm py-3 text-gray-900">{message.text}</p>
+                <p className="text-sm py-3 text-gray-900">
+                    {message.text}
+                </p>
             </div>
         );
     };
@@ -74,7 +89,8 @@ export default function MessageBox({ message, currentUserId }: Props) {
         <div className="grid grid-rows-1">
             <div
                 className={clsx('flex gap-2 mb-3', {
-                    'justify-end text-right': isCurrentUserSender,
+                    'justify-end text-right':
+                        isCurrentUserSender,
                     'justify-start': !isCurrentUserSender,
                 })}
             >

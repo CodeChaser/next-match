@@ -7,8 +7,11 @@ import clsx from 'clsx';
 import { usePathname, useRouter, useSearchParams,} from 'next/navigation';
 import { useState } from 'react';
 import { Chip } from '@heroui/chip';
+import useMessageStore from '@/hooks/useMessageStore';
 
 export default function MessageSideBar() {
+    // prettier-ignore
+    const unreadCount = useMessageStore( state => state.unreadCount, );
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
@@ -38,6 +41,7 @@ export default function MessageSideBar() {
         router.replace(`${pathname}?${params}`);
     };
 
+    // prettier-ignore
     return (
         <div className="flex flex-col shadow-md rounded-lg cursor-pointer">
             {items.map(
@@ -58,7 +62,7 @@ export default function MessageSideBar() {
                         <Icon size={24} />
                         <div className="flex justify-between flex-grow">
                             <span>{label}</span>
-                            {chip && <Chip>0</Chip>}
+                            {chip && (<Chip>{unreadCount}</Chip> )}
                         </div>
                     </div>
                 ),
