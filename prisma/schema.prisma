@@ -23,22 +23,19 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // createdAt DateTime @default(now())
-  // updatedAt DateTime @updatedAt
   @@unique([provider, providerAccountId])
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  passwordHash  String
-  image         String?
-  accounts      Account[]
-  Member        Member?
-  // createdAt DateTime @default(now())
-  // updatedAt DateTime @updatedAt
+  id              String    @id @default(cuid())
+  name            String?
+  email           String    @unique
+  emailVerified   DateTime?
+  passwordHash    String
+  image           String?
+  accounts        Account[]
+  profileComplete Boolean   @default(false)
+  member          Member?
 }
 
 model Member {
@@ -91,4 +88,19 @@ model Message {
   dateRead         DateTime?
   senderDeleted    Boolean   @default(false)
   recipientDeleted Boolean   @default(false)
+}
+
+model Token {
+  id      String    @id @default(cuid())
+  email   String
+  token   String
+  expires DateTime
+  type    TokenType
+
+  @@unique([email, token])
+}
+
+enum TokenType {
+  VERIFICATION
+  PASSWORD_RESET
 }

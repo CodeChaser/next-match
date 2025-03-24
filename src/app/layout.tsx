@@ -16,11 +16,16 @@ export default async function RootLayout({
 }>) {
     const session = await auth();
     const userId = session?.user?.id || null;
+    // prettier-ignore
+    const profileComplete = session?.user?.profileComplete || false;
 
     return (
         <html lang="en">
             <body>
-                <Providers userId={userId}>
+                <Providers
+                    userId={userId}
+                    profileComplete={profileComplete}
+                >
                     <TopNav />
                     <main className="container mx-auto">
                         {children}

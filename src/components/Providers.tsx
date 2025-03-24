@@ -9,16 +9,10 @@ import { ReactNode, useCallback, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Providers({
-    children,
-    userId,
-}: {
-    children: ReactNode;
-    userId: string | null;
-}) {
-    const updateUnreadCount = useMessageStore(
-        state => state.updateUnreadCount,
-    );
+// prettier-ignore
+export default function Providers({children, userId, profileComplete}: 
+  {children: ReactNode, userId: string | null, profileComplete: boolean}) {
+    const updateUnreadCount = useMessageStore(state => state.updateUnreadCount, );
 
     const setUnreadCount = useCallback(
         (amount: number) => {
@@ -35,8 +29,8 @@ export default function Providers({
         }
     }, [setUnreadCount, userId]);
 
-    usePresenceChannel();
-    useNotificationChannel(userId);
+    usePresenceChannel(userId, profileComplete);
+    useNotificationChannel(userId, profileComplete);
 
     return (
         <HeroUIProvider>

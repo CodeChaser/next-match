@@ -1,37 +1,46 @@
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "name": "Debug Frontend (Chrome)",
-      "type": "pwa-chrome",
-      "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "userDataDir": "C:\\Users\\codec\\AppData\\Local\\Google\\Chrome\\User Data\\Default",
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
-    },
-    {
-      "name": "Debug Server-Side Actions (Node.js)",
-      "type": "pwa-node",
-      "request": "launch",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
-      "outFiles": ["${workspaceFolder}/.next/**/*.js"]
-    },
-    {
-      "type": "pwa-node",
-      "request": "attach",
-      "name": "Attach to Running Next.js Dev Server",
-      "port": 9229,
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Full Stack Debugging (Chrome + Node)",
-      "configurations": ["Debug Frontend (Chrome)", "Debug Server-Side Actions (Node.js)"]
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Frontend (Chrome)",
+            "type": "pwa-chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}",
+            "userDataDir": "C:\\Users\\codec\\AppData\\Local\\Google\\Chrome\\User Data\\Default",
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+        },
+        {
+            "name": "Debug Server-Side Actions (Node.js)",
+            "type": "pwa-node",
+            "request": "launch",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": ["run", "dev"],
+            "sourceMaps": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "outFiles": ["${workspaceFolder}/.next/**/*.js"]
+        },
+        {
+            "type": "pwa-node",
+            "request": "attach",
+            "name": "Attach to Running Next.js Dev Server",
+            "port": 9229,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+        },
+        {
+            "name": "Debug Token Frontend (Chrome)",
+            "type": "pwa-chrome",
+            "request": "launch",
+            "url": "http://localhost:3000/verify-email?token=c8da0eb1705bd33b7d6acb04f230ce5bf73a29e13d0996f0a7eaaa688fe73cfda2c7d0aea3b520e2155272e1ee463f38",
+            "webRoot": "${workspaceFolder}",
+            "userDataDir": "C:\\Users\\codec\\AppData\\Local\\Google\\Chrome\\User Data\\Default",
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Full Stack Debugging (Chrome + Node)",
+            "configurations": ["Debug Frontend (Chrome)", "Debug Server-Side Actions (Node.js)"]
+        }
+    ]
 }
