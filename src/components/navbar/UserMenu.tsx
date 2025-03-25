@@ -10,15 +10,17 @@ import {
 
 import { Avatar } from '@heroui/avatar';
 import Link from 'next/link';
-import { signOutUser } from '@/app/actions/authActions';
-import { transformImageUrl } from '@/lib/util';
 
+import { transformImageUrl } from '@/lib/util';
+import { signOut } from 'next-auth/react';
+
+// prettier-ignore
 type Props = {
     user:
         | {
-              name?: string | null;
-              image?: string | null;
-          }
+            name?: string | null;
+            image?: string | null;
+        }
         | null
         | undefined;
 };
@@ -65,7 +67,9 @@ export default function UserMenu({ user }: Props) {
                 <DropdownItem
                     key="logOut"
                     color="danger"
-                    onPress={async () => signOutUser()}
+                    onPress={() =>
+                        signOut({ callbackUrl: '/' })
+                    }
                 >
                     Log out
                 </DropdownItem>

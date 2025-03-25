@@ -1,6 +1,6 @@
 'use server';
 
-import { auth, signIn, signOut } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { sendPasswordResetEmail, sendVerificationEmail } from '@/lib/mail';
 import { prisma } from '@/lib/prisma';
 import { LoginSchema } from '@/lib/schemas/loginSchema';
@@ -48,9 +48,9 @@ export async function signInUser(data: LoginSchema): Promise<ActionResult<string
     }
 }
 
-export async function signOutUser() {
-    await signOut({ redirectTo: '/' });
-}
+// export async function signOutUser() {
+//     await signOut({ redirectTo: '/' });
+// }
 
 export async function registerUser(data: RegisterSchema): Promise<ActionResult<User>> {
     try {
@@ -244,4 +244,14 @@ export async function completeSocialLoginProfile(data: ProfileSchema): Promise<A
         console.log(error);
         throw error;
     }
+}
+
+export async function getUserRole() {
+    const session = await auth();
+
+    const role = session?.user.role;
+
+    if (!role) throw new Error('Not in role');
+
+    return role;
 }
