@@ -6,10 +6,8 @@ import DeleteButton from '@/components/DeleteButton';
 import { Photo } from '@prisma/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {
-    deleteImage,
-    setMainImage,
-} from '@/app/actions/userActions';
+// prettier-ignore
+import { deleteImage,  setMainImage,} from '@/app/actions/userActions';
 import { toast } from 'react-toastify';
 
 type Props = {

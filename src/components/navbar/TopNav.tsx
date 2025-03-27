@@ -2,12 +2,13 @@ import { GiMatchTip } from 'react-icons/gi';
 // prettier-ignore
 import { Navbar, NavbarBrand, NavbarContent,} from '@heroui/navbar';
 import Link from 'next/link';
-import { Button } from '@heroui/button';
+// import { Button } from '@heroui/button';
 import NavLink from './NavLink';
 import { auth } from '@/auth';
 import UserMenu from './UserMenu';
 import { getUserInfoForNav } from '@/app/actions/userActions';
 import FiltersWrapper from './FiltersWrapper';
+// import LogoutButton from './Logout';
 
 export default async function TopNav() {
     const session = await auth();
@@ -75,7 +76,7 @@ export default async function TopNav() {
                         <UserMenu user={userInfo} />
                     ) : (
                         <>
-                            <Button
+                            {/* <Button
                                 as={Link}
                                 href={'/login'}
                                 variant={'bordered'}
@@ -90,9 +91,10 @@ export default async function TopNav() {
                                 className={'text-white'}
                             >
                                 Register
-                            </Button>
+                            </Button> */}
                         </>
                     )}
+                    {/* <LogoutButton /> */}
                 </NavbarContent>
             </Navbar>
             <FiltersWrapper />

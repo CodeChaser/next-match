@@ -4,14 +4,12 @@ import ResultMessage from '@/components/ResultMessage';
 import { Spinner } from '@heroui/spinner';
 import { MdOutlineMailOutline } from 'react-icons/md';
 
-export default async function VerifyEmailPage({
-    searchParams,
-}: {
-    searchParams: { token: string };
+// prettier-ignore
+export default async function VerifyEmailPage({ searchParams,}: {  searchParams: Promise<{ token: string }>
 }) {
-    console.log('before the verifyEmail function');
+    const { token } = await searchParams;
 
-    const result = await verifyEmail(searchParams.token);
+    const result = await verifyEmail(token);
 
     return (
         <CardWrapper

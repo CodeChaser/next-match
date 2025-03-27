@@ -23,7 +23,7 @@ export default function NavLink({ href, label }: Props) {
             href={href}
         >
             <span>{label}</span>
-            {href === '/messages' && (
+            {href === '/messages' && unreadCount > 0 && (
                 <span>({unreadCount})</span>
             )}
         </NavbarItem>

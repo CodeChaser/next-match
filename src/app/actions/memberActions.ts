@@ -80,6 +80,8 @@ export async function getMemberByUserId(userId: string) {
 
 export async function getMemberPhotosByUserId(userId: string) {
     const currentUserId = await getAuthUserId();
+    console.log('currentUserId:', currentUserId);
+    console.log('UserId:', userId);
 
     const member = await prisma.member.findUnique({
         where: { userId },
@@ -89,6 +91,9 @@ export async function getMemberPhotosByUserId(userId: string) {
             },
         },
     });
+
+    console.log('🧑‍🤝‍🧑 Member:', member);
+    console.log('📷 Photos:', member?.photos);
 
     if (!member) return null;
 
